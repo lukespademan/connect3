@@ -75,15 +75,12 @@ def detect_win(board):
                     won = True
                     return won
     """checks for 3 in a y=x+c diag"""
-    rows = rows[::-1]
-    for i in len(rows):
-        rows[i] = rows[i][::-1]
-    for row in range(3):
+    for row in range(2, 5):
         c = ""
-        for col in range(3):
+        for col in range(2, 5):
             if rows[row][col] != "0":
                 c = rows[row][col]
-                if rows[row][col] == rows[row+1][col+1] == rows[row+2][col+2]:
+                if rows[row][col] == rows[row-1][col-1] == rows[row-2][col-2]:
                     won = True
                     return won
 
