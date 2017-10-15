@@ -130,7 +130,7 @@ def main():
             if data:
                 if data == "YT":  # if they tell me its my turn
                     my_turn = True
-                elif data = "IW":
+                elif data == "IW":
                     display.scroll("Lost")
                 else:
                     board = data
