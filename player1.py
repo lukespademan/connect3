@@ -45,7 +45,7 @@ def fall(x, y, board, colour):
 
 
 def detect_win(board):
-    rows = board.split(":")
+    rows = board.split(":")[:-1]
     won = False
     """checks for 3 in a row"""
     for row in rows:
