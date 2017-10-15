@@ -118,7 +118,7 @@ def main():
                 sleep(250)  # allows recognition of one press
             if button_b.is_pressed():
                 board = fall(x, y, board, my_colour)
-                if won(board):
+                if detect_win(board):
                     display.show(Image("my_colour"*25))
                     radio.send("IW")
                     break
