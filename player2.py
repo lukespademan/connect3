@@ -63,11 +63,10 @@ def main():
                     x += 1  # move along.
                     if x > 5:  # when your at the end go to the start
                         x = 0
-
-                    row = ["0", "0", "0", "0", "0"]
-                    row[x] = my_colour  # set the pixel at the top, where you are to your colour (brightness)
-                    for c, pixel_colour in enumerate(row):  # counter acts as x co-ord
-                        board = set_board_pixel(c, 0, board, pixel_colour)  # update the pixels on the board
+                row = ["0", "0", "0", "0", "0"]
+                row[x] = my_colour  # set the pixel at the top, where you are to your colour (brightness)
+                for c, pixel_colour in enumerate(row):  # counter acts as x co-ord
+                    board = set_board_pixel(c, 0, board, pixel_colour)  # update the pixels on the board
                 send_board(board)
                 sleep(250)  # allows recognition of one press
             if button_b.is_pressed():
