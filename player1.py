@@ -44,6 +44,52 @@ def fall(x, y, board, colour):
     return board
 
 
+def detect_win(board):
+    rows = board.split(":")
+    won = False
+    """checks for 3 in a row"""
+    for row in rows:
+        c = ""
+        for i in range(3):
+            if row[i] != "0":
+                c = row[i]
+                if row[i] == row[i+1] == row[i+2]:
+                    won = True
+                    return won
+    """checks for 3 in a col"""
+    for row in range(3):
+        c = ""
+        for col in range(5):
+            if rows[row][col] != "0":
+                c = rows[row][col]
+                if rows[row][col] == rows[row+1][col] == rows[row+2][col]:
+                    won = True
+                    return won
+    """checks for 3 in a y=-x+c diag"""
+    for row in range(3):
+        c = ""
+        for col in range(3):
+            if rows[row][col] != "0":
+                c = rows[row][col]
+                if rows[row][col] == rows[row+1][col+1] == rows[row+2][col+2]:
+                    won = True
+                    return won
+    """checks for 3 in a y=x+c diag"""
+    rows = rows[::-1]
+    for i in rows:
+        rows[i] = rows[i][::-1]
+    for row in range(3):
+        c = ""
+        for col in range(3):
+            if rows[row][col] != "0":
+                c = rows[row][col]
+                if rows[row][col] == rows[row+1][col+1] == rows[row+2][col+2]:
+                    won = True
+                    return won
+
+    return won
+
+
 def main():
     board = "00000:" \
             "00000:" \
@@ -72,8 +118,13 @@ def main():
                 sleep(250)  # allows recognition of one press
             if button_b.is_pressed():
                 board = fall(x, y, board, my_colour)
-                my_turn = False
-                radio.send("YT")  # sends 'Your Turn' Message
+                if won(board):
+                    display.show(Image("my_colour"*25))
+                    radio.send("IW")
+                    break
+                else:
+                    my_turn = False
+                    radio.send("YT")  # sends 'Your Turn' Message
         else:
             data = radio.receive()
             if data:

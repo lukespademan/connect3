@@ -71,8 +71,13 @@ def main():
                 sleep(250)  # allows recognition of one press
             if button_b.is_pressed():
                 board = fall(x, y, board, my_colour)
-                my_turn = False
-                radio.send("YT")  # sends 'Your Turn' Message
+                if won(board):
+                    display.show(Image("my_colour"*25))
+                    radio.send("IW")
+                    break
+                else:
+                    my_turn = False
+                    radio.send("YT")  # sends 'Your Turn' Message
         else:
             data = radio.receive()
             if data:
