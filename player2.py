@@ -50,6 +50,7 @@ def main():
             "00000:" \
             "00000:" \
             "00000:"
+    send_board(board)
     x = 4
     y = 0
     my_colour = "3"
@@ -81,6 +82,6 @@ def main():
                 else:
                     board = data
                     display.show(Image(data))
-       
+
 
 main()
