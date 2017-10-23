@@ -127,7 +127,7 @@ def main():
             if button_b.is_pressed():
                 board = fall(x, y, board, my_colour)
                 if detect_win(board):
-                    display.show(Image("my_colour"*25))
+                    display.show(Image(my_colour*25))
                     radio.send("IW")
                     break
                 else:
