@@ -46,40 +46,6 @@ def fall(x, y, board, colour):
 
 def detect_win(board):
     rows = board.split(":")[:-1]
-<<<<<<< HEAD
-    """checks for 3 in a row"""
-    for row in rows:
-        c = ""
-        for i in range(3):
-            if row[i] != "0":
-                c = row[i]
-                if row[i] == row[i+1] == row[i+2]:
-                    return True
-
-    """checks for 3 in a col"""
-    for row in range(3):
-        c = ""
-        for col in range(5):
-            print(row, col)
-            if rows[row][col] != "0":
-                c = rows[row][col]
-                if rows[row][col] == rows[row+1][col] == rows[row+2][col]:
-                    return True
-
-    """checks for 3 in a y=-x+c diag"""
-    for i in range(2):
-        for row in range(3):
-            c = ""
-            for col in range(3):
-                if rows[row][col] != "0":
-                    c = rows[row][col]
-                    if rows[row][col] == rows[row+1][col+1] == rows[row+2][col+2]:
-                        return True
-        rows = rows[::-1]
-
-
-    return False
-=======
     won = False
         """detects win on x axis"""
     for row in rows:
@@ -116,7 +82,6 @@ def detect_win(board):
                 if rows[col][row] == rows[col - 1][row + 1] == rows[col - 2][row + 2]:
                     return colour
     return None
->>>>>>> 798ffd81a01212d93c7f1f4b0342a066b9f32db7
 
 
 def main():
