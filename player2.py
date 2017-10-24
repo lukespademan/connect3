@@ -5,7 +5,6 @@ import music
 radio.config(channel=86)
 radio.on()
 
-
 def send_board(board):
     """send board to display and to other micro:bit"""
     radio.send(board)
