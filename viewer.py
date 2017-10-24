@@ -9,6 +9,6 @@ radio.on()
 while True:
     data = radio.receive()
     if data:
-        if data != "YT":
+        if not(data in ("YT", "IW")):
             display.show(Image(data))
             print(data)
