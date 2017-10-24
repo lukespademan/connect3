@@ -49,12 +49,10 @@ def congradulate():
     radio.send("IW")
     display.show(Image.HAPPY)
     music.play(music.BA_DING)
-    exit()
 
 def defeat():
     display.show(Image.SAD)
     music.play(music.DADADADUM)
-    exit()
 
 def detect_win(board):
     rows = board.split(":")
@@ -124,6 +122,7 @@ while True:
                 my_turn = True
             elif data == "IW":
                 defeat()
+                break
             else:
                 board = data
                 display.show(Image(data))
