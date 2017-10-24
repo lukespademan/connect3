@@ -36,10 +36,10 @@ while True:
             if c == "9":
                 formatted.append(player1)
             if c == "0":
-                formated.append(blank)
+                formatted.append(blank)
         formatted.append(edge)  # two thick edge on right side
         formatted.append(edge)
 
     for i in range(8):
         formatted.append(edge)
-    sense.set_pixels(formated)
+    sense.set_pixels(formatted)
