@@ -46,6 +46,7 @@ def fall(x, y, board, colour):
 
 def detect_win(board):
     rows = board.split(":")[:-1]
+<<<<<<< HEAD
     """checks for 3 in a row"""
     for row in rows:
         c = ""
@@ -78,6 +79,44 @@ def detect_win(board):
 
 
     return False
+=======
+    won = False
+        """detects win on x axis"""
+    for row in rows:
+        for i in range(3):
+            colour = row[i]
+            if colour != "0":
+                if row[i] == row[i+1] == row[i+2]:
+                    print(row)
+                    return colour
+
+    """"detects win on y axis"""
+    for col in range(3):
+        for row in range(5):
+            colour = rows[col][row]
+            if colour != "0":
+                if rows[col][row] == rows[col+1][row] == rows[col+2][row]:
+                    print(colour)
+                    return colour
+
+    """detects win on y=-x+c"""
+    for col in range(3):
+        for row in range(3):
+            colour = rows[col][row]
+            if colour != "0":
+                if rows[col][row] == rows[col+1][row+1] == rows[col+2][row+2]:
+                    return colour
+
+    """detects win on y=x+c"""
+    for col in range(4, 1, -1):
+        for row in range(3):
+            colour = rows[col][row]
+            if colour != "0":
+                print(col ,row)
+                if rows[col][row] == rows[col - 1][row + 1] == rows[col - 2][row + 2]:
+                    return colour
+    return None
+>>>>>>> 798ffd81a01212d93c7f1f4b0342a066b9f32db7
 
 
 def main():
@@ -109,7 +148,7 @@ def main():
             if button_b.is_pressed():
                 board = fall(x, y, board, my_colour)
                 if detect_win(board):
-                    display.show(Image("my_colour"*25))
+                    display.show(Image(my_colour*25))
                     radio.send("IW")
                     break
                 else:

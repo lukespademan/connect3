@@ -47,55 +47,41 @@ def fall(x, y, board, colour):
 def detect_win(board):
     rows = board.split(":")[:-1]
     won = False
-    """checks for 3 in a row"""
-    try:
-        for row in rows:
-            c = ""
-            for i in range(3):
-                if row[i] != "0":
-                    c = row[i]
-                    if row[i] == row[i+1] == row[i+2]:
-                        won = True
-                        return won
-    except:
-        pass
-    """checks for 3 in a col"""
-    try:
+        """detects win on x axis"""
+    for row in rows:
+        for i in range(3):
+            colour = row[i]
+            if colour != "0":
+                if row[i] == row[i+1] == row[i+2]:
+                    print(row)
+                    return colour
+
+    """"detects win on y axis"""
+    for col in range(3):
+        for row in range(5):
+            colour = rows[col][row]
+            if colour != "0":
+                if rows[col][row] == rows[col+1][row] == rows[col+2][row]:
+                    print(colour)
+                    return colour
+
+    """detects win on y=-x+c"""
+    for col in range(3):
         for row in range(3):
-            c = ""
-            for col in range(5):
-                if rows[row][col] != "0":
-                    c = rows[row][col]
-                    if rows[row][col] == rows[row+1][col] == rows[row+2][col]:
-                        won = True
-                        return won
-    except:
-        pass
-    """checks for 3 in a y=-x+c diag"""
-    try:
+            colour = rows[col][row]
+            if colour != "0":
+                if rows[col][row] == rows[col+1][row+1] == rows[col+2][row+2]:
+                    return colour
+
+    """detects win on y=x+c"""
+    for col in range(4, 1, -1):
         for row in range(3):
-            c = ""
-            for col in range(3):
-                if rows[row][col] != "0":
-                    c = rows[row][col]
-                    if rows[row][col] == rows[row+1][col+1] == rows[row+2][col+2]:
-                        won = True
-                        return won
-    except:
-        pass
-    """checks for 3 in a y=x+c diag"""
-    try:
-        for row in range(2, 5):
-            c = ""
-            for col in range(2, 5):
-                if rows[row][col] != "0":
-                    c = rows[row][col]
-                    if rows[row][col] == rows[row-1][col-1] == rows[row-2][col-2]:
-                        won = True
-                        return won
-    except:
-        pass
-    return won
+            colour = rows[col][row]
+            if colour != "0":
+                print(col ,row)
+                if rows[col][row] == rows[col - 1][row + 1] == rows[col - 2][row + 2]:
+                    return colour
+    return None
 
 
 def main():
@@ -126,7 +112,7 @@ def main():
             if button_b.is_pressed():
                 board = fall(x, y, board, my_colour)
                 if detect_win(board):
-                    display.show(Image("my_colour"*25))
+                    display.show(Image(my_colour*25))
                     radio.send("IW")
                     break
                 else:
