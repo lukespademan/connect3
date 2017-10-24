@@ -1,5 +1,6 @@
 from microbit import *
 import radio
+import music
 
 radio.config(channel=86)
 radio.on()
@@ -44,10 +45,20 @@ def fall(x, y, board, colour):
     return board
 
 
+def congradulate():
+    radio.send("IW")
+    display.show(Image.HAPPY)
+    music.play(music.BA_DING)
+    exit()
+
+def defeat():
+    display.show(Image.SAD)
+    music.play(music.DADADADUM)
+    exit()
+
 def detect_win(board):
-    rows = board.split(":")[:-1]
+    rows = board.split(":")
     won = False
-        """detects win on x axis"""
     for row in rows:
         for i in range(3):
             colour = row[i]
@@ -55,8 +66,6 @@ def detect_win(board):
                 if row[i] == row[i+1] == row[i+2]:
                     print(row)
                     return colour
-
-    """"detects win on y axis"""
     for col in range(3):
         for row in range(5):
             colour = rows[col][row]
@@ -64,16 +73,12 @@ def detect_win(board):
                 if rows[col][row] == rows[col+1][row] == rows[col+2][row]:
                     print(colour)
                     return colour
-
-    """detects win on y=-x+c"""
     for col in range(3):
         for row in range(3):
             colour = rows[col][row]
             if colour != "0":
                 if rows[col][row] == rows[col+1][row+1] == rows[col+2][row+2]:
                     return colour
-
-    """detects win on y=x+c"""
     for col in range(4, 1, -1):
         for row in range(3):
             colour = rows[col][row]
@@ -84,51 +89,41 @@ def detect_win(board):
     return None
 
 
-def main():
-    board = "00000:" \
-            "00000:" \
-            "00000:" \
-            "00000:" \
-            "00000:"
-    send_board(board)
-    x = 4
-    y = 0
-    my_colour = "9"
-    my_turn = True
-    while True:
-        if my_turn:
-            if button_a.is_pressed():
+my_colour = "9"
+my_turn = True
+board = "00000:00000:00000:00000:00000"
+x = 0
+y = 0
+while True:
+    if my_turn:
+        if button_a.is_pressed():
+            x += 1
+            while get_board_pixel(x, 1, board) != "0":
                 x += 1
-                while get_board_pixel(x, 1, board) != "0":  # until there is no counter underneath
-                    x += 1  # move along.
-                    if x > 5:  # when your at the end go to the start
-                        x = 0
-
-                row = ["0", "0", "0", "0", "0"]
-                row[x] = my_colour  # set the pixel at the top, where you are to your colour (brightness)
-                for c, pixel_colour in enumerate(row):  # counter acts as x co-ord
-                    board = set_board_pixel(c, 0, board, pixel_colour)  # update the pixels on the board
-                send_board(board)
-                sleep(250)  # allows recognition of one press
-            if button_b.is_pressed():
-                board = fall(x, y, board, my_colour)
-                if detect_win(board):
-                    display.show(Image(my_colour*25))
-                    radio.send("IW")
-                    break
-                else:
-                    my_turn = False
-                    radio.send("YT")  # sends 'Your Turn' Message
-        else:
-            data = radio.receive()
-            if data:
-                if data == "YT":  # if they tell me its my turn
-                    my_turn = True
-                elif data == "IW":
-                    display.scroll("Lost")
-                else:
-                    board = data
-                    display.show(Image(data))
-
-
-main()
+                if x > 5:
+                    x = 0
+            row = ["0", "0", "0", "0", "0"]
+            row[x] = my_colour
+            for c, pixel_colour in enumerate(row):
+                board = set_board_pixel(c, 0, board, pixel_colour)
+            send_board(board)
+            sleep(250)
+        if button_b.is_pressed():
+            board = fall(x, y, board, my_colour)
+            if detect_win(board):
+                display.show(Image(my_colour*25))
+                radio.send("IW")
+                break
+            else:
+                my_turn = False
+                radio.send("YT")
+    else:
+        data = radio.receive()
+        if data:
+            if data == "YT":
+                my_turn = True
+            elif data == "IW":
+                defeat()
+            else:
+                board = data
+                display.show(Image(data))
