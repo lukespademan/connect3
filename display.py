@@ -3,7 +3,7 @@ from time import sleep
 from sense_hat import SenseHat
 
 sense = SenseHat()
-
+sense.set_rotation(180)
 PORT = "/dev/ttyACM0"
 BAUD = 115200
 
