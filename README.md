@@ -1,4 +1,6 @@
 # micro:bit connect3
+Comments have been removed in some places due to the file size limit on the bbc micro:bits
+
 ## player1.py
 This is the code for the first micro:bit. They get to go first.
 
