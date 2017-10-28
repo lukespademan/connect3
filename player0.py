@@ -113,7 +113,7 @@ while not got_friend:
             print("Error: ")
             continue
 
-sleep(500)
+sleep(1000)
 
 board = "00000:00000:00000:00000:00000"
 display.show(Image(board))
